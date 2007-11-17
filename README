@@ -1,0 +1,27 @@
+This is the Perl distribution Regexp-Common-AT-Profanity.
+
+INSTALLATION
+
+Regexp-Common-AT-Profanity installation is straightforward. If your CPAN shell
+is set up, you should just be able to do
+
+    % cpan Regexp::Common::AT::Profanity
+
+Download it, unpack it, then build it as per the usual:
+
+    % perl Makefile.PL
+    % make && make test
+
+Then install it:
+
+    % make install
+
+DOCUMENTATION
+
+Regexp-Common-AT-Profanity documentation is available as in POD. So you can do:
+
+    % perldoc Regexp::Common::AT::Profanity
+
+to read the documentation online with your favorite pager.
+
+Marcel Gruenauer
