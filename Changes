@@ -4,6 +4,16 @@ global:
 releases:
   - author: 'Marcel Gruenauer <marcel@cpan.org>'
     changes:
+      - set the version to 0.02
+      - 'split list into nounds, adjectives and verbs, each with their own construction rules'
+      - 'better separation of words into nouns, verbs and adjectives'
+      - noted that verbs ending in -en or -ern can be made into adjectives by adding -d
+      - added tests to that effect
+    date: 2007-11-18T14:33:57Z
+    tags: []
+    version: 0.02
+  - author: 'Marcel Gruenauer <marcel@cpan.org>'
+    changes:
       - original version
     date: 2007-11-17T21:50:18Z
     tags: []

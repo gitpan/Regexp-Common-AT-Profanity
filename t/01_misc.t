@@ -12,6 +12,10 @@ my @like = (
     'Qh Uherafbua, Qh!',
     'Nefpuybpu',
     'Vue Bcsref, vpu znfpu rhfpu sregvfpu',
+    'avpug ohzfraq rffra',
+    'rva fnhsraqre uhaq',
+    'rva xvssraqrf xvaq',
+    'qrz chqreaqrz znaa'
 );
 
 my @unlike = (

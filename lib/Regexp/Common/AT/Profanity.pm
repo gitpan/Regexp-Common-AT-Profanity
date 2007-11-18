@@ -7,34 +7,26 @@ use Regexp::Assemble;
 use HTML::Entities;
 
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 
 # rot13 in vim: g?{motion}
 
-my @profanity = qw(
+my @nouns = qw(
     (nefpu|bnfpu)(tr?fvpug|xrxf|yrpxre|ybpu|jnemra?)?
     (qerpxf|fpurv&fmyvt;)?gfpuhfpu(ra)?(fnh)?
-    [ot]rfpuvffra
     nygre\f+fnpx
     nezyrhpugre
     onaxreg
     onfgneq
-    orvqr?y
-    orvqycenpxre
+    orvqr?y(cenpxre)?
     ovgpu
-    oy&bhzy;q(r[eaf]?)?
     oy&bhzy;qznaa
-    oynq(r[eaf]?)?
-    oehamry?a
-    ohzfra
     ohzfrerv
     qnezsybevfg
-    qvyyb
     qrcc
+    qvyyb
     qbyz
-    qbbs
-    qbbsre
     qerpxfnh
     qh\f+bcsre
     qhzzrewna
@@ -47,10 +39,8 @@ my @profanity = qw(
     shpx
     shpxvat
     shg
-    trsvpxg
     trfvpugffpunoenpxr
     trfvpugfibgmr
-    urehzuhera
     uveav
     ubuyxbcs
     uhaqfsbgg
@@ -69,15 +59,13 @@ my @profanity = qw(
     yrpx\f+zvpu
     zvfgfg&hhzy;px
     avttre
-    cvffr[ea]?
+    cvffre
     cengreuher?
     chqrenag
     chqrerv
-    chqrea
     enhfpuxvaq
     fnpxenggr
     fnhwhqr?
-    fpurv(&fmyvt;|ff)(r[ea]?)?
     fpujnamyhgfpure
     fpujhpugry
     fpujhyr\f+fnh
@@ -87,21 +75,72 @@ my @profanity = qw(
     fg&hhzy;px\f+qerpx
     gnfpuraovyyneq
     gebggry
-    ireqnzzgr?
-    iresyhpug(r[efa]?)?
+    hathfgr?y
     ibyyvqvbg
     ibyyxbssre
     ibgmr
-    jvkibeyntr
-    jvkk?re
+    jv(kk?|puf)(re(rv)?|ibeyntr)
 );
+
+my $adj_dekl = "(e[mnrs]?)?";
+my @adjectives = qw(
+    (or|ire)(fpuvffra|xnpxg)
+    (ibyy|na)tr(fpuvffra|xnpxg)
+    oy&bhzy;q
+    oynq
+    oehamryaq
+    qrccreg
+    qbbs
+    svfpuryaq
+    cvffra
+    fpurv(&fmyvt;|ff)
+    ireqnzzg
+    iresvpxg
+    iresyhpug
+    ireuheg
+    gebggryvt
+    iregebggryg
+);
+
+
+my $verb_dekl = '';
+my @verbs = qw(
+    nofcevgmra
+    notrfcevgmg
+    ohzfra
+    oehamry?a
+    svfpurya
+    trsvpxg
+    xvssra
+    urehzuhera
+    urehzfpujhpugrya
+    chqrea
+    fnhsra
+);
+
+tr/A-Za-z/N-ZA-Mn-za-m/ for @nouns, @verbs, @adjectives;
+
+my @profanity = @nouns;
+
+# verbs ending in -en or -ern can be made into adjectives by adding -d
+
+push @profanity =>
+    map { "$_$adj_dekl"  }
+    @adjectives,
+        map  { $_ . 'd' }
+        grep { /er?n$/ }
+        @verbs;
+
+push @profanity =>
+    map { "$_$verb_dekl" }
+    @verbs;
 
 my $assembler = Regexp::Assemble->new(flags => 'i');
 for (@profanity) {
-    tr/A-Za-z/N-ZA-Mn-za-m/;
     decode_entities($_);
     $assembler->add($_);
 }
+
 
 # the '\x{'.'%s}' kludge is so it doesn't look like a template start tag
 
@@ -170,7 +209,7 @@ please use the C<regexpcommonatprofanity> tag.
 
 =head1 VERSION 
                    
-This document describes version 0.01 of L<Regexp::Common::AT::Profanity>.
+This document describes version 0.02 of L<Regexp::Common::AT::Profanity>.
 
 =head1 BUGS AND LIMITATIONS
 
